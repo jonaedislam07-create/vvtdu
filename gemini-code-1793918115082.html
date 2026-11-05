@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>উপযোগ - Upogog | আপনার প্রয়োজনে সবসময়!</title>
+  <!-- Google Fonts: Noto Serif Bengali -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0b1325 0%, #111a2e 50%, #080d19 100%);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent-orange: #ff6b00;
+      --accent-gold: #ffb703;
+      --gradient-orange: linear-gradient(135deg, #ff8c00, #ff4500);
+      --accent-green: #10b981;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Serif Bengali', serif; }
+    
+    body { 
+      background: var(--bg-gradient); 
+      background-attachment: fixed;
+      color: var(--text-main); 
+      padding-bottom: 90px;
+      min-height: 100vh;
+    }
+
+    /* Slim Navigation Header */
+    header {
+      background: rgba(13, 22, 41, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 0.6rem 1rem;
+      position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid rgba(255, 107, 0, 0.25);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .brand-container { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 12px; 
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Custom Logo Icon 'উ' */
+    .logo-u-badge {
+      width: 42px;
+      height: 42px;
+      background: var(--gradient-orange);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .u-icon {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .brand-text { display: flex; flex-direction: column; text-align: left; }
+    .logo { 
+      font-size: 1.6rem; 
+      font-weight: 800; 
+      background: linear-gradient(135deg, #ffffff, var(--accent-gold)); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+      line-height: 1.1;
+    }
+    .tagline { color: var(--accent-orange); font-size: 0.78rem; font-weight: 600; }
+
+    .controls-container { padding: 1rem; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.8rem; }
+    .search-box { 
+      width: 100%; 
+      padding: 0.75rem 1.2rem; 
+      border-radius: 20px; 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+      background: rgba(19, 31, 56, 0.6); 
+      backdrop-filter: blur(8px);
+      color: var(--text-main); 
+      font-size: 0.95rem; 
+      outline: none; 
+      transition: 0.3s; 
+    }
+    .search-box:focus { border-color: var(--accent-orange); box-shadow: 0 0 15px rgba(255, 107, 0, 0.3); }
+
+    .categories { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 4px; }
+    .cat-btn { 
+      padding: 0.5rem 1.2rem; 
+      border-radius: 20px; 
+      border: 1px solid rgba(255, 255, 255, 0.08); 
+      background: rgba(19, 31, 56, 0.6); 
+      color: var(--text-muted); 
+      cursor: pointer; 
+      white-space: nowrap; 
+      transition: 0.3s; 
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+    .cat-btn.active { 
+      background: var(--gradient-orange); 
+      color: #fff; 
+      border-color: transparent; 
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4); 
+    }
+
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; padding: 1rem; max-width: 1200px; margin: 0 auto; }
+    
+    /* Navy Blue Floating Glassmorphism Cards */
+    .product-card {
+      background: rgba(19, 31, 56, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 20px; 
+      overflow: hidden; 
+      display: flex; 
+      flex-direction: column; 
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); 
+      position: relative; 
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 15px 0 rgba(0, 0, 0, 0.2);
+    }
+    .product-card:hover { 
+      transform: translateY(-10px); 
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 107, 0, 0.2); 
+    }
+
+    /* Vibrant Accents & Themes */
+    .theme-purple { border-color: rgba(168, 85, 247, 0.4); }
+    .theme-purple .badge { background: linear-gradient(45deg, #9333ea, #c084fc); }
+    .theme-purple .btn-cart { background: linear-gradient(45deg, #9333ea, #c084fc); color: #fff; }
+
+    .theme-cyan { border-color: rgba(6, 182, 212, 0.4); }
+    .theme-cyan .badge { background: linear-gradient(45deg, #0891b2, #22d3ee); }
+    .theme-cyan .btn-cart { background: linear-gradient(45deg, #0891b2, #22d3ee); color: #fff; }
+
+    .theme-gold { border-color: rgba(245, 158, 11, 0.4); }
+    .theme-gold .badge { background: linear-gradient(45deg, #d97706, #fbbf24); color: #000; }
+    .theme-gold .btn-cart { background: linear-gradient(45deg, #d97706, #fbbf24); color: #000; }
+
+    .theme-rose { border-color: rgba(244, 63, 94, 0.4); }
+    .theme-rose .badge { background: linear-gradient(45deg, #e11d48, #fb7185); }
+    .theme-rose .btn-cart { background: linear-gradient(45deg, #e11d48, #fb7185); color: #fff; }
+
+    .theme-green { border-color: rgba(16, 185, 129, 0.4); }
+    .theme-green .badge { background: linear-gradient(45deg, #059669, #34d399); }
+    .theme-green .btn-cart { background: linear-gradient(45deg, #059669, #34d399); color: #fff; }
+
+    .theme-orange { border-color: rgba(255, 107, 0, 0.4); }
+    .theme-orange .badge { background: var(--gradient-orange); }
+    .theme-orange .btn-cart { background: var(--gradient-orange); color: #fff; }
+
+    .product-img { width: 100%; height: 190px; object-fit: cover; }
+    .product-details { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .badge { align-self: flex-start; padding: 4px 12px; border-radius: 12px; font-size: 0.72rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .title { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+    .desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; flex-grow: 1; line-height: 1.4; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.9rem; }
+    .price { font-size: 1.35rem; font-weight: 800; color: var(--accent-gold); }
+    .advance-tag { font-size: 0.72rem; color: var(--accent-orange); background: rgba(255, 107, 0, 0.15); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(255, 107, 0, 0.3); font-weight: 600; }
+
+    .card-actions { display: flex; gap: 0.5rem; }
+    .btn { flex: 1; padding: 0.65rem; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.88rem; }
+    .btn-review { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.12); }
+    .btn-review:hover { background: rgba(255,255,255,0.18); }
+
+    /* Modals */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; }
+    .modal-content { background: #111a2e; border-radius: 20px; padding: 1.4rem; max-width: 480px; width: 100%; max-height: 90vh; overflow-y: auto; border: 1px solid rgba(255, 107, 0, 0.3); position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+    .close-modal { position: absolute; top: 1rem; right: 1rem; font-size: 1.4rem; cursor: pointer; color: var(--text-muted); }
+
+    /* Forms */
+    .form-group { margin-bottom: 0.8rem; }
+    .form-group label { display: block; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; }
+    .form-control { width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: #080d19; color: #fff; outline: none; }
+    .form-control:focus { border-color: var(--accent-orange); }
+
+    .pay-info { background: rgba(255, 107, 0, 0.08); padding: 0.9rem; border-radius: 12px; border: 1px dashed var(--accent-orange); margin-bottom: 0.9rem; font-size: 0.83rem; }
+    .copy-box { display: flex; align-items: center; justify-content: space-between; background: #080d19; padding: 8px 12px; border-radius: 8px; margin: 6px 0; border: 1px solid rgba(255,183,3,0.3); }
+    .btn-copy { background: rgba(255, 107, 0, 0.2); color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: 600; }
+
+    /* Floating Cart Footer */
+    .cart-float { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(11, 19, 37, 0.85); backdrop-filter: blur(16px); border-top: 1px solid rgba(255, 107, 0, 0.3); padding: 0.7rem 1rem; display: flex; justify-content: space-between; align-items: center; z-index: 99; box-shadow: 0 -4px 20px rgba(0,0,0,0.4); }
+
+    /* Footer */
+    footer { background: #060912; border-top: 1px solid rgba(255, 107, 0, 0.2); padding: 2rem 1rem; margin-top: 3rem; color: var(--text-muted); }
+    .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .footer-section h4 { color: var(--accent-gold); margin-bottom: 0.8rem; font-size: 1rem; }
+    .footer-section p, .footer-section div { font-size: 0.85rem; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; }
+    .social-links { display: flex; gap: 0.8rem; margin-top: 0.8rem; }
+    .social-links a { color: var(--accent-gold); font-size: 1.1rem; }
+
+    .success-box { text-align: center; padding: 0.8rem; }
+    .success-icon { font-size: 3rem; color: var(--accent-green); margin-bottom: 0.8rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Slim Navigation Header -->
+  <header>
+    <div class="brand-container">
+      <div class="logo-u-badge">
+        <span class="u-icon">উ</span>
+      </div>
+      <div class="brand-text">
+        <div class="logo">উপযোগ</div>
+        <div class="tagline">আপনার প্রয়োজনে সবসময়!</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="controls-container">
+    <input type="text" class="search-box" id="searchBox" placeholder="প্রয়োজনীয় পণ্য খুঁজুন..." oninput="filterProducts()">
+    <div class="categories">
+      <button class="cat-btn active" onclick="filterCat('all', this)">সব পণ্য</button>
+      <button class="cat-btn" onclick="filterCat('study', this)">স্টাডি কিট</button>
+      <button class="cat-btn" onclick="filterCat('tech', this)">টেক ও গ্যাজেট</button>
+      <button class="cat-btn" onclick="filterCat('gift', this)">গিফট প্যাক</button>
+    </div>
+  </div>
+
+  <div class="products-grid" id="productGrid"></div>
+
+  <!-- Cart Footer -->
+  <div class="cart-float" id="cartFloat">
+    <div>
+      <span style="color: var(--text-muted); font-size:0.85rem;">আইটেম: </span><strong id="cartCount">0</strong> | 
+      <span style="color: var(--text-muted); font-size:0.85rem;">মোট: </span><strong id="cartTotal" style="color: var(--accent-gold);">৳0</strong>
+      <div style="font-size: 0.72rem; color: var(--accent-orange);">৩০% অগ্রিম: <span id="cartAdvance">৳0</span></div>
+    </div>
+    <button class="btn btn-cart" style="flex: initial; padding: 0.65rem 1.3rem; background: var(--gradient-orange);" onclick="openCheckoutModal()">
+      <i class="fa-solid fa-truck-fast"></i> চেকআউট
+    </button>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeCheckoutModal()">&times;</span>
+      <h3 style="margin-bottom: 0.8rem; color: var(--accent-gold);"><i class="fa-solid fa-bag-shopping"></i> অর্ডার ও অগ্রিম পেমেন্ট</h3>
+      
+      <div class="pay-info">
+        <p style="color: var(--accent-gold); font-weight: bold; margin-bottom: 4px;">📌 ৩০% অগ্রিম পেমেন্ট নির্দেশিকা:</p>
+        <p>মোট বিল <strong>৳<span id="modalTotal">0</span></strong> এর মধ্যে অগ্রিম: <strong style="color: var(--accent-orange); font-size: 1.05rem;">৳<span id="modalAdvance">0</span></strong></p>
+        <p style="font-size: 0.78rem; color: var(--text-muted);">বকেয়া (৳<span id="modalCod">0</span>) কুরিয়ার থেকে প্রডাক্ট নেওয়ার সময় দেবেন।</p>
+        
+        <hr style="margin: 6px 0; border-color: rgba(255,255,255,0.1);">
+        
+        <p style="font-size: 0.8rem; color: var(--text-main); font-weight: 600;">পেমেন্ট পাঠানোর পদ্ধতি (Send Money):</p>
+        
+        <div class="copy-box">
+          <span><strong>bKash / Nagad:</strong> <span id="payNum" style="color:var(--accent-gold); font-weight:bold;">01614824987</span></span>
+          <button class="btn-copy" onclick="copyNumber()"><i class="fa-regular fa-copy"></i> কপি করুন</button>
+        </div>
+
+        <ol style="font-size: 0.75rem; color: var(--text-muted); padding-left: 1.1rem; margin-top: 4px;">
+          <li>bKash বা Nagad অ্যাপে গিয়ে <strong>Send Money</strong> সিলেক্ট করুন।</li>
+          <li>উপরের নম্বরে <strong>৳<span id="guideAdvance">0</span></strong> সেন্ড মানি করুন।</li>
+          <li>পেমেন্ট শেষে নিচের ফর্মে তথ্য দিয়ে হোয়াটসঅ্যাপে সাবমিট করুন।</li>
+        </ol>
+      </div>
+
+      <div class="form-group">
+        <label>আপনার নাম *</label>
+        <input type="text" id="custName" class="form-control" placeholder="যেমন: মো: আরিফ">
+      </div>
+      <div class="form-group">
+        <label>মোবাইল নম্বর *</label>
+        <input type="text" id="custPhone" class="form-control" placeholder="017xxxxxxxx">
+      </div>
+      <div class="form-group">
+        <label>কুরিয়ার ডেলিভারি ঠিকানা (জেলা, থানা ও সম্পূর্ণ এলাকা) *</label>
+        <textarea id="custAddress" class="form-control" rows="2" placeholder="যেমন: হাউস ১২, রোড ৫, মিরপুর-১০, ঢাকা।"></textarea>
+      </div>
+      <div class="form-group">
+        <label>পেমেন্ট মাধ্যম *</label>
+        <select id="payMethod" class="form-control">
+          <option value="bKash">bKash (বিকাশ)</option>
+          <option value="Nagad">Nagad (নগদ)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>যে নম্বর থেকে অগ্রিম পেমেন্ট করেছেন *</label>
+        <input type="text" id="paySender" class="form-control" placeholder="018xxxxxxxx">
+      </div>
+      <div class="form-group">
+        <label>Transaction ID (TrxID) - ঐচ্ছিক</label>
+        <input type="text" id="payTxn" class="form-control" placeholder="যেমন: 9J38KSKS">
+      </div>
+
+      <button class="btn btn-cart" style="width: 100%; margin-top: 0.8rem; background: var(--gradient-orange);" onclick="submitOrderToWhatsApp()">
+        <i class="fa-brands fa-whatsapp"></i> হোয়াটসঅ্যাপে অর্ডার কনফার্ম করুন
+      </button>
+    </div>
+  </div>
+
+  <!-- Success Notification Modal -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-content">
+      <div class="success-box">
+        <i class="fa-solid fa-circle-check success-icon"></i>
+        <h3 style="color: var(--accent-green); margin-bottom: 6px;">অর্ডার সাবমিট হয়েছে!</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+          আপনার অর্ডারের বিবরণটি হোয়াটসঅ্যাপে পাঠানো হয়েছে।
+        </p>
+        <div style="background: rgba(255,255,255,0.04); padding: 10px; border-radius: 8px; text-align: left; font-size: 0.8rem; margin-bottom: 0.9rem; border-left: 3px solid var(--accent-gold);">
+          <p style="margin-bottom: 4px; font-weight:600;">⏳ ডেলিভারি সংক্রান্ত তথ্য:</p>
+          <p style="color: var(--text-muted); line-height: 1.4;">
+            প্রোডাক্ট কোয়ালিটি চেকিং ও কুরিয়ার হস্তান্তরের জন্য ২-৪ দিন সময় লাগতে পারে। যেকোনো তথ্যের জন্য হোয়াটসঅ্যাপেই যোগাযোগ করতে পারবেন।
+          </p>
+        </div>
+        <button class="btn btn-cart" style="width: 100%; background: var(--gradient-orange);" onclick="closeSuccessModal()">ঠিক আছে</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal-overlay" id="reviewModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeReviewModal()">&times;</span>
+      <h3 id="reviewTitle" style="margin-bottom: 0.8rem; color: var(--accent-gold);">কাস্টমার রিভিউ</h3>
+      <div id="reviewList" style="margin-bottom: 0.8rem;"></div>
+      <hr style="border-color: rgba(255,255,255,0.1); margin-bottom: 0.8rem;">
+      <h4 style="font-size: 0.9rem; margin-bottom: 4px;">আপনার মতামত দিন</h4>
+      <input type="text" id="revName" class="form-control" placeholder="আপনার নাম" style="margin-bottom: 6px;">
+      <select id="revRating" class="form-control" style="margin-bottom: 6px;">
+        <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
+        <option value="4">⭐⭐⭐⭐ (4/5)</option>
+      </select>
+      <textarea id="revComment" class="form-control" rows="2" placeholder="প্রোডাক্টটি কেমন লেগেছে?"></textarea>
+      <button class="btn btn-cart" style="width: 100%; margin-top: 8px; background: var(--gradient-orange);" onclick="addReview()">জমা দিন</button>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4 style="display:flex; align-items:center; gap:8px;">
+          <div style="width:24px; height:24px; background:var(--accent-orange); color:#fff; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:bold;">উ</div> 
+          উপযোগ (Upogog)
+        </h4>
+        <p>স্টুডেন্ট ও তরুণদের পড়ার টেবিল ও লাইফস্টাইলকে সুন্দর ও অর্থবহ করতে অনন্য ও প্রয়োজনীয় প্রোডাক্টের নির্ভরযোগ্য প্ল্যাটফর্ম।</p>
+      </div>
+      <div class="footer-section">
+        <h4>যোগাযোগ</h4>
+        <div><i class="fa-solid fa-location-dot" style="color:var(--accent-orange);"></i> ঢাকা, বাংলাদেশ</div>
+        <div><i class="fa-solid fa-phone" style="color:var(--accent-orange);"></i> +880 1614-824987</div>
+        <div><i class="fa-solid fa-envelope" style="color:var(--accent-orange);"></i> support@upogog.com</div>
+      </div>
+      <div class="footer-section">
+        <h4>সোশ্যাল মিডিয়া</h4>
+        <p>আমাদের সাথে যুক্ত থাকুন:</p>
+        <div class="social-links">
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://wa.me/8801614824987" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const WHATSAPP_NUMBER = "8801614824987"; // আপনার আপডেট নম্বর
+
+    // পণ্য তালিকা ও তাদের থিম
+    const products = [
+      { id: 1, title: "Aesthetic Study Desk Setup Kit", price: 850, category: "study", theme: "theme-purple", badge: "Best Seller", image: "https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?w=500", desc: "আই-কেয়ার LED ল্যাম্প, এক্রিলিক টু-ডু বোর্ড এবং কলমদানি কম্বো।" },
+      { id: 2, title: "Acrylic Dry-Erase Board", price: 350, category: "study", theme: "theme-cyan", badge: "Trending", image: "https://images.unsplash.com/photo-1584697964400-2ae6a2f6204c?w=500", desc: "কাঠের স্ট্যান্ড ও মার্কার সহ এস্থেটিক ট্রান্সপারেন্ট বোর্ড।" },
+      { id: 3, title: "Eye-Care Rechargeable Lamp", price: 390, category: "tech", theme: "theme-gold", badge: "3-Level Light", image: "https://images.unsplash.com/photo-1534073828943-f801091bb18c?w=500", desc: "৩৬০ ডিগ্রি ফ্লেক্সিবল নেক ও চার্জারে চলবে রাতভর।" },
+      { id: 4, title: "Revision Flashcards Set", price: 250, category: "study", theme: "theme-rose", badge: "Smart Study", image: "https://images.unsplash.com/photo-1588072432836-e10032774350?w=500", desc: "মেটাল রিং সহ ৩০০ GSM প্রিমিয়াম দ্রুত রিভিশন কার্ড।" },
+      { id: 5, title: "7-in-1 Gadget Cleaning Kit", price: 320, category: "tech", theme: "theme-green", badge: "Must Have", image: "https://images.unsplash.com/photo-1563770660941-20978e870e26?w=500", desc: "ল্যাপটপ কিবোর্ড, এয়ারবাডস ও ফোন পরিষ্কার রাখার টুলস।" },
+      { id: 6, title: "Minimalist Journal & Pen Combo", price: 450, category: "gift", theme: "theme-orange", badge: "Gift Special", image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500", desc: "লেদার ফিনিশিং নোটবুক, মেটালিক পেন্সিল ও সুভেনির বক্স।" }
+    ];
+
+    let cart = {};
+    let activeCategory = 'all';
+
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      const search = document.getElementById('searchBox').value.toLowerCase();
+      grid.innerHTML = '';
+
+      products.filter(p => {
+        const matchesCat = activeCategory === 'all' || p.category === activeCategory;
+        const matchesSearch = p.title.toLowerCase().includes(search);
+        return matchesCat && matchesSearch;
+      }).forEach(p => {
+        const advAmt = Math.round(p.price * 0.30);
+        grid.innerHTML += `
+          <div class="product-card ${p.theme}">
+            <img src="${p.image}" class="product-img" alt="${p.title}">
+            <div class="product-details">
+              <span class="badge">${p.badge}</span>
+              <div class="title">${p.title}</div>
+              <div class="desc">${p.desc}</div>
+              <div class="price-row">
+                <div class="price">৳${p.price}</div>
+                <div class="advance-tag">৩০% অগ্রিম: ৳${advAmt}</div>
+              </div>
+              <div class="card-actions">
+                <button class="btn btn-review" onclick="openReviewModal(${p.id})"><i class="fa-regular fa-star"></i> রিভিউ</button>
+                <button class="btn btn-cart" onclick="addToCart(${p.id})"><i class="fa-solid fa-plus"></i> কার্ট</button>
+              </div>
+            </div>
+          </div>`;
+      });
+    }
+
+    function addToCart(id) {
+      cart[id] = (cart[id] || 0) + 1;
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      let count = 0, total = 0;
+      for(let id in cart) {
+        let p = products.find(x => x.id == id);
+        count += cart[id];
+        total += p.price * cart[id];
+      }
+      const advance = Math.round(total * 0.30);
+      document.getElementById('cartCount').innerText = count;
+      document.getElementById('cartTotal').innerText = '৳' + total;
+      document.getElementById('cartAdvance').innerText = '৳' + advance;
+    }
+
+    function filterCat(cat, btn) {
+      activeCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts();
+    }
+
+    function filterProducts() { renderProducts(); }
+
+    function openCheckoutModal() {
+      let total = 0;
+      for(let id in cart) {
+        let p = products.find(x => x.id == id);
+        total += p.price * cart[id];
+      }
+      if(total === 0) return alert("আপনার কার্ট খালি!");
+      
+      const advance = Math.round(total * 0.30);
+      const cod = total - advance;
+
+      document.getElementById('modalTotal').innerText = total;
+      document.getElementById('modalAdvance').innerText = advance;
+      document.getElementById('guideAdvance').innerText = advance;
+      document.getElementById('modalCod').innerText = cod;
+
+      document.getElementById('checkoutModal').style.display = 'flex';
+    }
+
+    function closeCheckoutModal() { document.getElementById('checkoutModal').style.display = 'none'; }
+
+    function copyNumber() {
+      const numText = document.getElementById('payNum').innerText;
+      navigator.clipboard.writeText(numText).then(() => {
+        const btn = document.querySelector('.btn-copy');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> কপি হয়েছে!';
+        btn.style.background = '#10b981';
+        btn.style.color = '#fff';
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fa-regular fa-copy"></i> কপি করুন';
+          btn.style.background = 'rgba(255, 107, 0, 0.2)';
+          btn.style.color = 'var(--accent-gold)';
+        }, 2000);
+      });
+    }
+
+    function submitOrderToWhatsApp() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+      const payMethod = document.getElementById('payMethod').value;
+      const paySender = document.getElementById('paySender').value.trim();
+      const payTxn = document.getElementById('payTxn').value.trim();
+
+      if(!name || !phone || !address || !paySender) {
+        return alert("অনুগ্রহ করে আপনার তথ্যগুলো সঠিকভাবে পূরণ করুন!");
+      }
+
+      let orderItemsStr = "";
+      let totalAmount = 0;
+
+      for(let id in cart) {
+        let p = products.find(x => x.id == id);
+        orderItemsStr += `- ${p.title} x ${cart[id]} (৳${p.price * cart[id]})\n`;
+        totalAmount += p.price * cart[id];
+      }
+
+      const advanceAmt = Math.round(totalAmount * 0.30);
+      const codAmt = totalAmount - advanceAmt;
+
+      const msg = `🛒 *নতুন অর্ডার - উপযোগ (Upogog)*\n` +
+                  `--------------------------------------\n` +
+                  `👤 *নাম:* ${name}\n` +
+                  `📞 *ফোন:* ${phone}\n` +
+                  `📍 *ঠিকানা:* ${address}\n\n` +
+                  `📦 *অর্ডার তালিকা:*\n${orderItemsStr}\n` +
+                  `💰 *মোট মূল্য:* ৳${totalAmount}\n` +
+                  `💳 *৩০% অগ্রিম (${payMethod}):* ৳${advanceAmt} (Sender: ${paySender} | TrxID: ${payTxn || 'N/A'})\n` +
+                  `💵 *বকেয়া (COD):* ৳${codAmt}\n` +
+                  `--------------------------------------`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+      
+      closeCheckoutModal();
+      document.getElementById('successModal').style.display = 'flex';
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('successModal').style.display = 'none';
+      cart = {};
+      updateCartUI();
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
